@@ -169,14 +169,19 @@ public abstract class Animal implements AnimalInterface {
     /**
      * Метод записи всех полей класса в файл.
      */
-    public void writeInFile() {
+    void writeInFile() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("id: ").append(hashCode()).append("\n")
+                .append("Breed: ").append(getBreed()).append("\n")
+                .append("Color: ").append(getColor()).append("\n")
                 .append("Name: ").append(getName()).append("\n")
                 .append("Gender: ").append(getGender()).append("\n")
                 .append("Date of Birth: ").append(getDateOfBirth()).append("\n")
-                .append("Size: ").append(getSize()).append("\n");
+                .append("Size: ").append(getSize()).append("\n")
+                .append("Owner's name: ").append(getNameOfOwner()).append("\n")
+                .append("Nursery name: ").append(getNurseryName()).append("\n")
+                .append("Temper: ").append(getTemper()).append("\n");
 
         System.out.println(sb);
 

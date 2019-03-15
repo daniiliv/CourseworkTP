@@ -61,4 +61,22 @@ public abstract class AbstractAnimalFactory implements AnimalFactory {
 
         return anyAnimal;
     }
+
+    public Animal createAnimal(String breed, String color, String name, String gender, String dateOfBirth, int size, String ownerName, String nurseryName, String temper) {
+        Animal anyAnimal = getCreatedAnimal();
+
+        anyAnimal.setBreed(breed);
+        anyAnimal.setColor(color);
+        anyAnimal.setName(name);
+        anyAnimal.setGender(gender);
+        anyAnimal.setDateOfBirth(dateOfBirth);
+        anyAnimal.setSize(size);
+        anyAnimal.setNameOfOwner(ownerName);
+        anyAnimal.setNurseryName(nurseryName);
+        anyAnimal.setTemper(temper);
+
+        anyAnimal.writeInFile();
+
+        return anyAnimal;
+    }
 }
