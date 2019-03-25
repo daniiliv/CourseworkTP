@@ -1,7 +1,15 @@
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
 
 /**
  * Пользовательский интерфейс.
@@ -33,7 +41,7 @@ public class animalFormUI implements ActionListener {
     private JTextField jtfColor;
     private JTextField jtfName;
     private JTextField jtfGender;
-    private JTextField jtfDateOfBirth;
+    private JDatePickerImpl dateOfBirthPicker;
     private JTextField jtfSize;
     private JTextField jtfOwnerName;
     private JTextField jtfNurseryName;
@@ -72,6 +80,9 @@ public class animalFormUI implements ActionListener {
         //Подсказка - какое животное выбрано.
         jlabWhat = new JLabel("Cat");
 
+        //To avoid NPE.
+        animalFactory = createAnimalBySpecies(jlabWhat.getText());
+
         // Create the button group.
         bg = new ButtonGroup();
 
@@ -97,9 +108,17 @@ public class animalFormUI implements ActionListener {
         jtfGender = new JTextField(10);
 
         jlabDateOfBirth = new JLabel("Date of Birth");
-        jtfDateOfBirth = new JTextField(10);
 
-        jlabSize = new JLabel("Size");
+        //Выпадающий календарь.
+        UtilDateModel model = new UtilDateModel();
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        dateOfBirthPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+
+        jlabSize = new JLabel("Height (in cm.)");
         jtfSize = new JTextField(10);
 
         jlabOwnerName = new JLabel("Owner's name");
@@ -151,7 +170,7 @@ public class animalFormUI implements ActionListener {
         jtfGender.setBounds(375, 90, 150, 20);
 
         jlabDateOfBirth.setBounds(270, 110, 150, 20);
-        jtfDateOfBirth.setBounds(375, 110, 150, 20);
+        dateOfBirthPicker.setBounds(375, 110, 150, 20);
 
         jlabSize.setBounds(270, 130, 150, 20);
         jtfSize.setBounds(375, 130, 150, 20);
@@ -180,7 +199,7 @@ public class animalFormUI implements ActionListener {
         jtfColor.addActionListener(this);
         jtfName.addActionListener(this);
         jtfGender.addActionListener(this);
-        jtfDateOfBirth.addActionListener(this);
+        dateOfBirthPicker.addActionListener(this);
         jtfSize.addActionListener(this);
         jtfOwnerName.addActionListener(this);
         jtfNurseryName.addActionListener(this);
@@ -189,7 +208,7 @@ public class animalFormUI implements ActionListener {
         jtfSize.addCaretListener(e -> {
             if (!isStringInt(jtfSize.getText())) {
                 jlabUserInfo.setForeground(Color.RED);
-                jlabUserInfo.setText("Incorrect size format!");
+                jlabUserInfo.setText("Incorrect height format!");
             } else {
                 jlabUserInfo.setText("");
             }
@@ -208,7 +227,7 @@ public class animalFormUI implements ActionListener {
             fields[1] = color = jtfColor.getText();
             fields[2] = name = jtfName.getText();
             fields[3] = gender = jtfGender.getText();
-            fields[4] = dateOfBirth = jtfDateOfBirth.getText();
+            fields[4] = dateOfBirth = dateOfBirthPicker.getJFormattedTextField().getText();
             fields[5] = nameOfOwner = jtfOwnerName.getText();
             fields[6] = nurseryName = jtfNurseryName.getText();
             fields[7] = temper = jtfTemper.getText();
@@ -227,7 +246,7 @@ public class animalFormUI implements ActionListener {
                     correct = false;
                 } else if (size == -1) {
                     jlabUserInfo.setForeground(Color.RED);
-                    jlabUserInfo.setText("Incorrect size format!");
+                    jlabUserInfo.setText("Incorrect height format!");
                     correct = false;
                 }
             }
@@ -270,7 +289,7 @@ public class animalFormUI implements ActionListener {
         jfrm.getContentPane().add(jtfGender);
         jfrm.getContentPane().add(jlabGender);
 
-        jfrm.getContentPane().add(jtfDateOfBirth);
+        jfrm.getContentPane().add(dateOfBirthPicker);
         jfrm.getContentPane().add(jlabDateOfBirth);
 
         jfrm.getContentPane().add(jtfSize);
@@ -361,6 +380,7 @@ public class animalFormUI implements ActionListener {
 
     /**
      * Проверка корректности ввода поля Size;
+     *
      * @param str - Строка с размером.
      * @return true, если ввод корректен, либо строка пуста. false - если брошено исключение.
      */
@@ -371,5 +391,30 @@ public class animalFormUI implements ActionListener {
         } catch (NumberFormatException e) {
             return str.isEmpty();
         }
+    }
+
+    /**
+     * Форматирование даты.
+     */
+    public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+
+        private String datePattern = "dd-MM-yyyy";
+        private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+
+        @Override
+        public Object stringToValue(String text) throws ParseException {
+            return dateFormatter.parseObject(text);
+        }
+
+        @Override
+        public String valueToString(Object value) {
+            if (value != null) {
+                Calendar cal = (Calendar) value;
+                return dateFormatter.format(cal.getTime());
+            }
+
+            return "";
+        }
+
     }
 }

@@ -178,7 +178,7 @@ public abstract class Animal implements AnimalInterface {
                 .append("Name: ").append(getName()).append("\n")
                 .append("Gender: ").append(getGender()).append("\n")
                 .append("Date of Birth: ").append(getDateOfBirth()).append("\n")
-                .append("Size: ").append(getSize()).append("\n")
+                .append("Height: ").append(getSize()).append(" (cm.)").append("\n")
                 .append("Owner's name: ").append(getNameOfOwner()).append("\n")
                 .append("Nursery name: ").append(getNurseryName()).append("\n")
                 .append("Temper: ").append(getTemper()).append("\n");
