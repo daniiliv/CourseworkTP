@@ -1,0 +1,10 @@
+id: 283690262
+Breed: ada
+Color: dasdas
+Name: dasda
+Gender: dadas
+Date of Birth: dadasd
+Size: 1
+Owner's name: addqwe
+Nursery name: qweqwe
+Temper: addasd

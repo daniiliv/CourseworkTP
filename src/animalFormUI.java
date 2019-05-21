@@ -81,7 +81,7 @@ public class animalFormUI implements ActionListener {
         jlabWhat = new JLabel("Cat");
 
         //To avoid NPE.
-        animalFactory = createAnimalBySpecies(jlabWhat.getText());
+        animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
 
         // Create the button group.
         bg = new ButtonGroup();
@@ -325,58 +325,26 @@ public class animalFormUI implements ActionListener {
          */
         if (jrbCat.isSelected()) {
             jlabWhat.setText("Cat");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         } else if (jrbDog.isSelected()) {
             jlabWhat.setText("Dog");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         } else if (jrbFish.isSelected()) {
             jlabWhat.setText("Fish");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         } else if (jrbHorse.isSelected()) {
             jlabWhat.setText("Horse");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         } else if (jrbMouse.isSelected()) {
             jlabWhat.setText("Mouse");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         } else {
             jlabWhat.setText("Snake");
-            animalFactory = createAnimalBySpecies(jlabWhat.getText());
+            animalFactory = Main.createAnimalBySpecies(jlabWhat.getText());
         }
 
 
     }
-
-
-    /**
-     * Возвращает конкретный объект AnimalFactory в зависимости от того, какой вид животного выбран.
-     */
-    private AnimalFactory createAnimalBySpecies(String species) {
-        species = species.toLowerCase();
-
-        switch (species) {
-
-            case "cat":
-                return new CatFactory();
-
-            case "dog":
-                return new DogFactory();
-
-            case "mouse":
-                return new MouseFactory();
-
-            case "horse":
-                return new HorseFactory();
-
-            case "snake":
-                return new SnakeFactory();
-
-            case "fish":
-                return new FishFactory();
-
-        }
-        return null;
-    }
-
 
     /**
      * Проверка корректности ввода поля Size;

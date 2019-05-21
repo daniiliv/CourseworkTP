@@ -17,7 +17,7 @@ public class Main {
         Animal animal = animalFactory.createAnimal();
     }
 
-    private static AnimalFactory createAnimalBySpecies(String species) {
+    static AnimalFactory createAnimalBySpecies(String species) {
         species = species.toLowerCase();
 
         switch (species) {

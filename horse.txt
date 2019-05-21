@@ -1,0 +1,10 @@
+id: 1404328863
+Breed: asdasd
+Color: qeqwe
+Name: dsasd
+Gender: qweqwe
+Date of Birth: 10-03-2016
+Size (height): 123 (cm.)
+Owner's name: eqwe
+Nursery name: dasd
+Temper: qeqwe
